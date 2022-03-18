@@ -13,7 +13,7 @@ done really well.
 **Started**: March 18th 2022\
 **Scheduled End Date**: March 25th 2022
 
-#Currency System
+# Currency System
 The database of this application will connect a certain user id on Discord to
 the amount of coins that they have.  Every time a user sends a message into the
 Discord server, the user will gain one coin (the amount of coins that you get
@@ -24,7 +24,7 @@ coins.
 
 **!currency-help**: A description of how the currency works is sent into chat.
 
-#Game System
+# Game System
 As mentioned previously, this bot will have a game system.  Here are the games
 that can be played.
 
@@ -38,7 +38,7 @@ in the duel command wins.  No money is wagered, but you get bragging rights!
 
 **!trivia**: Answer some trivia questions!
 
-#Other Commands
+# Other Commands
 
 **!help**: Pulls up a list of commands.
 
@@ -48,5 +48,5 @@ in the duel command wins.  No money is wagered, but you get bragging rights!
 
 **!userInfo**: Posts the users info in the chat.
 
-#Post-project thoughts
+# Post-project thoughts
 
