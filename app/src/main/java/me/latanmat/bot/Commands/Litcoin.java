@@ -97,4 +97,10 @@ public class Litcoin {
             System.out.println("Number of coins has been updated.");
         }
     }
+    public static String helpToString(){
+
+        String retString = "**!currency-help**: Get help in learning our currency system!\n";
+
+        return retString;
+    }
 }

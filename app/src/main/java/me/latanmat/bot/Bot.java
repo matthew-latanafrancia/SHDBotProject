@@ -16,7 +16,7 @@ public class Bot {
 
     public static void main(String[] args) throws Exception {
         //will make a config file in the future
-        JDABuilder builder = JDABuilder.createDefault("INSERT KEY HERE");
+        JDABuilder builder = JDABuilder.createDefault("INSERT TOKEN HERE");
         builder.setActivity(Activity.playing("Making a Discord Bot"));
         builder.setStatus(OnlineStatus.ONLINE);
         builder.addEventListeners(new Listener());
