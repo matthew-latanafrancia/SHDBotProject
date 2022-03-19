@@ -1,12 +1,16 @@
 package me.latanmat.bot.Commands;
 
 import me.latanmat.bot.Bot;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
+import java.awt.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collection;
 
 import static me.latanmat.bot.Bot.conn;
 
@@ -62,6 +66,20 @@ public class Litcoin {
         event.getMessage().reply(stringToSend).queue();
     }
 
+    public void currencyHelp(GuildMessageReceivedEvent event){
+        //make an embed to tell you about currency
+        EmbedBuilder embed = new EmbedBuilder();
+        embed.setTitle("Litcoin Information");
+        embed.setDescription("Litcoin is the currency that LittenBot uses.  With " +
+                "Litcoin, you can play games on this server that makes you wager your " +
+                "currency.  Depending on how much currency you have, you can buy items " +
+                "or ranks in the shop using !shop.");
+        embed.setColor(Color.CYAN);
+        embed.setFooter("Bot created by Dez", event.getGuild().getOwner().getUser().getAvatarUrl());
+        event.getChannel().sendMessageEmbeds(embed.build()).queue();
+
+    }
+
     public void addCoins(int coinsToAdd) throws SQLException{
         PreparedStatement prepStmt = Bot.conn.prepareStatement("UPDATE Litcoin SET NumberOfCoins = ? WHERE UserID = ?");
         prepStmt.setInt(1, numberOfCoins+coinsToAdd);
@@ -72,6 +90,11 @@ public class Litcoin {
     }
 
     public void negateCoins(int coinsToNegate) throws SQLException{
-
+        PreparedStatement prepStmt = Bot.conn.prepareStatement("UPDATE Litcoin SET NumberOfCoins = ? WHERE UserID = ?");
+        prepStmt.setInt(1, numberOfCoins-coinsToNegate);
+        prepStmt.setString(2, userID);
+        if(prepStmt.execute()){
+            System.out.println("Number of coins has been updated.");
+        }
     }
 }

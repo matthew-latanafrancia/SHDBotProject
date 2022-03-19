@@ -29,12 +29,16 @@ public class Listener extends ListenerAdapter {
                     embed.addField("Current Anime", "Digimon: Ghost Game \n Digimon Adventures 02 \n Pokemon (2019)", false);
                     embed.addField("Embed Field 2", "This is the content of Field 2", false);
                     embed.setFooter("Bot created by Dez", event.getGuild().getOwner().getUser().getAvatarUrl());
-                    event.getChannel().sendMessage(embed.build()).queue();
+                    event.getChannel().sendMessageEmbeds(embed.build()).queue();
                     embed.clear();
                 }
 
                 if (args[0].equalsIgnoreCase(prefix + "litcoin")) {
                     currentUser.litcoinCommand(event);
+                }
+
+                if (args[0].equalsIgnoreCase(prefix + "currency-help")){
+                    currentUser.currencyHelp(event);
                 }
             } else {
                 //add a coin to the litcoin
