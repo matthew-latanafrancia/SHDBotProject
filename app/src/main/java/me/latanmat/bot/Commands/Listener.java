@@ -10,12 +10,13 @@ import java.sql.SQLException;
 public class Listener extends ListenerAdapter {
     public String prefix = "!";
     public Bankheist bankheist; //for the bankheist threading
+    public BankheistThread bhMainThread = new BankheistThread();
 
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
         String[] args = event.getMessage().getContentRaw().split("\\s+");
         try {
-            Litcoin currentUser = new Litcoin(event.getAuthor().getId(), event.getGuild().getId());
+            Litcoin currentUser = new Litcoin(event.getAuthor().getId(), event.getGuild().getId(), event.getAuthor().getName());
 
             if (args[0].startsWith(prefix)) {
                 //check through all of the commands
@@ -65,19 +66,26 @@ public class Listener extends ListenerAdapter {
                 }
 
                 else if(args[0].equalsIgnoreCase(prefix + "bankheist")){
-                    try{
-                        int coinsBidded = Integer.parseInt(args[1]);
-                        if(coinsBidded <= currentUser.getNumberOfCoins()){
-                            //if there is no bankheist started
-                            if(true){
-                                //makes new bankheist object to start the bankheist
-                                bankheist = new Bankheist(event);
+                    if(args.length == 2) {
+                        try {
+                            int coinsBidded = Integer.parseInt(args[1]);
+                            if (coinsBidded <= currentUser.getNumberOfCoins()) {
+                                //if there is no bankheist started
+                                if (bhMainThread.getBankheist() == null) {
+                                    bankheist = new Bankheist();
+                                    bhMainThread = new BankheistThread(event, bankheist);
+                                    Thread thread = new Thread(bhMainThread);
+                                    thread.start();
+                                }
+                                currentUser.negateCoins(coinsBidded);
+                                bankheist.addUserToBankheist(currentUser, coinsBidded, event);
+                            } else {
+                                event.getMessage().reply("You don't have enough coins! Please input a valid number of coins" +
+                                        " to bet.").queue();
                             }
-                            bankheist.addUserToBankheist(currentUser, event);
+                        } catch (NumberFormatException ex) {
+                            System.out.println("NumberFormatException: " + ex.getMessage());
                         }
-                    }
-                    catch(NumberFormatException ex){
-                        System.out.println("NumberFormatException: " + ex.getMessage());
                     }
                 }
 

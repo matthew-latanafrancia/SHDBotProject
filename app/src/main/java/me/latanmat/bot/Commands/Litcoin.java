@@ -20,8 +20,10 @@ public class Litcoin {
      */
     private int numberOfCoins;
     private String userID;
+    private String name;
 
-    public Litcoin(String userID, String serverID) throws SQLException{
+    public Litcoin(String userID, String serverID, String name) throws SQLException{
+        this.name = name;
         //This gets information of the users
 
         PreparedStatement prepStmt = Bot.conn.prepareStatement("select UserID, NumberOfCoins from Litcoin where UserID = ? AND ServerID = ?");
@@ -57,6 +59,10 @@ public class Litcoin {
 
     public String getUserID() {
         return userID;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void litcoinCommand(GuildMessageReceivedEvent event){
