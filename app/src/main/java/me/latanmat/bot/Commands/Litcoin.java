@@ -79,7 +79,7 @@ public class Litcoin {
         embed.setDescription("Litcoin is the currency that LittenBot uses.  With " +
                 "Litcoin, you can play games on this server that makes you wager your " +
                 "currency.  Depending on how much currency you have, you can buy items " +
-                "or ranks in the shop using !shop.");
+                "or ranks in the shop using !shop.  To check how many coins you have, use !litcoin.");
         embed.setColor(Color.CYAN);
         embed.setFooter("Bot created by Dez", event.getGuild().getOwner().getUser().getAvatarUrl());
         event.getChannel().sendMessageEmbeds(embed.build()).queue();
@@ -105,7 +105,8 @@ public class Litcoin {
     }
     public static String helpToString(){
 
-        String retString = "**!currency-help**: Get help in learning our currency system!\n";
+        String retString = "**!currency-help**: Get help in learning our currency system!\n" +
+                "**!litcoin**: Check how many coins you have in this server.\n";
 
         return retString;
     }

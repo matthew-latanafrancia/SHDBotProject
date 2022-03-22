@@ -105,6 +105,30 @@ public class Listener extends ListenerAdapter {
                     }
                 }
 
+                else if(args[0].equalsIgnoreCase(prefix + "quote")){
+                    if(args.length > 1){
+                        String quote = "";
+                        for(int i = 1; i < args.length; i++){
+                            quote = quote + " " + args[i];
+                        }
+                        Quote.addQuote(quote);
+                        event.getChannel().sendMessage("Added quote!").queue();
+                    }
+                    else{
+                        event.getMessage().reply("Usage: !quote [insert quote here]").queue();
+                    }
+                }
+
+                else if(args[0].equalsIgnoreCase(prefix + "getQuote")){
+                    if(args.length == 2){
+                        int id = Integer.parseInt(args[1]);
+                        Quote.getQuote(id, event);
+                    }
+                    else{
+                        event.getMessage().reply("Usage: !getQuote [quote number]").queue();
+                    }
+                }
+
                 else if(args[0].equalsIgnoreCase(prefix + "userinfo")){
                     UserInfo.userInfoCommand(event, currentUser);
                 }
@@ -127,6 +151,7 @@ public class Listener extends ListenerAdapter {
                             Flipcoin.helpToString() +
                             Litcoin.helpToString() +
                             UserInfo.helpToString() +
+                            Quote.helpToString() +
                             "**!git**: Get the code for this bot!\n" +
                             "**!help**: How did you get here and not know what this command was.\n", false);
                     embed.setColor(Color.CYAN);
