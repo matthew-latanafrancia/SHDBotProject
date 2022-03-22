@@ -8,6 +8,12 @@ import java.awt.*;
 
 public class UserInfo {
     public static void userInfoCommand(GuildMessageReceivedEvent event, Litcoin currUser){
+        /*
+         * Gets the user and prints out all of the information such as
+         * userID and their profile picture into an embed.  This is then queued
+         * and sent to the user in the same channel that they messaged
+         * in.
+         */
         User usertoLookAt = event.getAuthor();
         String userID = usertoLookAt.getId();
         String userAvatar = usertoLookAt.getAvatarUrl();

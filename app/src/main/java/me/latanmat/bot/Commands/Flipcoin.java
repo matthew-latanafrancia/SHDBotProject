@@ -27,9 +27,7 @@ public class Flipcoin {
     }
 
     public static String helpToString(){
-
         String retString = "**!flipcoin [# of coins]**: Bet against the bot and win some coins!\n";
-
         return retString;
     }
 }

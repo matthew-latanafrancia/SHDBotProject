@@ -10,12 +10,14 @@ import static me.latanmat.bot.Bot.conn;
 
 public class Quote {
     public static void addQuote(String quote) throws SQLException {
+        //adds a quote to the database using !quote
         PreparedStatement prepStmt = conn.prepareStatement("INSERT INTO Quotes (`QuoteValue`) VALUES (?)");
         prepStmt.setString(1, quote);
         prepStmt.execute();
     }
 
     public static void getQuote(int id, GuildMessageReceivedEvent event) throws SQLException{
+        //gets a quote from the database using !getQuote
         PreparedStatement prepStmt = conn.prepareStatement("SELECT QuoteValue from Quotes where QuoteID = ?");
         prepStmt.setInt(1, id);
         ResultSet result = prepStmt.executeQuery();

@@ -23,9 +23,15 @@ public class Listener extends ListenerAdapter {
 
             if (args[0].startsWith(prefix)) {
                 //check through all of the commands
+                /*
+                 * Commands that don't have their own classes:
+                 * !git
+                 * !help
+                 */
                 if (args[0].equalsIgnoreCase(prefix + "shinyhunterdestroyer")) {
-                    //example line to show how to send a message in reply to a command
-                    //event.getChannel().sendMessage("This is a pretty sick test isn't it.").queue();
+                    /*
+                     * Sample command to just test out the bot.
+                     */
 
                     EmbedBuilder embed = new EmbedBuilder();
                     embed.setTitle("ShinyHunterDestroyer", "https://www.youtube.com/shinyhunterdestroyer");
@@ -38,7 +44,8 @@ public class Listener extends ListenerAdapter {
                     embed.clear();
                 }
 
-                else if (args[0].equalsIgnoreCase(prefix + "litcoin")) {
+                else if (args[0].equalsIgnoreCase(prefix + "litcoin")
+                                || args[0].equalsIgnoreCase(prefix + "litcoins")) {
                     currentUser.litcoinCommand(event);
                 }
 
@@ -134,8 +141,10 @@ public class Listener extends ListenerAdapter {
                 }
 
                 else if(args[0].equalsIgnoreCase(prefix + "git")){
+                    /*
+                     * Posts GitHub link in an embed for other users to see and click on.
+                     */
                     EmbedBuilder embed = new EmbedBuilder();
-
                     embed.setTitle("GitHub page for the bot", "https://github.com/matthew-latanafrancia/SHDBotProject");
                     embed.setColor(Color.CYAN);
                     embed.setFooter("Bot created by Dez", event.getGuild().getOwner().getUser().getAvatarUrl());
@@ -144,6 +153,13 @@ public class Listener extends ListenerAdapter {
                 }
 
                 else if(args[0].equalsIgnoreCase(prefix + "help")){
+                    /*
+                     * Each one of the main commands will have a helpToString method
+                     * to better organize the help descriptions.
+                     * Other less main ones such as the git command is fine just
+                     * leaving it in here since I didn't deem it a big enough command
+                     * for it to have its own class.
+                     */
                     EmbedBuilder embed = new EmbedBuilder();
 
                     embed.setTitle("Littenbot Commands");

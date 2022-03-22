@@ -20,9 +20,15 @@ public class Litcoin {
      */
     private int numberOfCoins;
     private String userID;
+    private String serverID;
     private String name;
 
     public Litcoin(String userID, String serverID, String name) throws SQLException{
+        /*
+         * The Litcoin() constructor gets the id of the user and the server
+         * so it can either make an account for the user in the database, or so that it can
+         * get the account of the user if acpplicable
+         */
         this.name = name;
         //This gets information of the users
 
@@ -31,18 +37,26 @@ public class Litcoin {
         prepStmt.setString(2, serverID);
         ResultSet results = prepStmt.executeQuery();
 
-        if (results.next()) {
+        if (results.next()) { //If the user already has an account on the server
             this.userID = results.getString(1); //print out the associated name of the ticker
+            this.serverID = serverID;
             this.numberOfCoins = results.getInt(2);
             prepStmt.close();
 
-        } else { //If the userID is NOT in the ResultSet
+        } else { //If the userID is NOT in the ResultSet.  Makes an account in the database for the user.
+            this.userID = userID;
+            this.serverID = serverID;
             newUser(userID, serverID);
             prepStmt.close();
         }
     }
 
     private void newUser(String userID, String serverID) throws SQLException{
+        /*
+         * The newUser function is called when the bot needs to add a new user into the database.  UserID and ServerID
+         * is saved because we want to make sure that we can track different numbers of coins per user just in case they
+         * are in separate servers.  This is because we want different coin values if the user is in a different server.
+         */
         PreparedStatement prepStmt = Bot.conn.prepareStatement("INSERT INTO Litcoin (`UserID`, `ServerID`, `NumberOfCoins`) VALUES (?, ?, ?)");
         prepStmt.setString(1, userID);
         prepStmt.setString(2, serverID);
@@ -67,7 +81,7 @@ public class Litcoin {
 
     public void litcoinCommand(GuildMessageReceivedEvent event){
         String stringToSend;
-        stringToSend = "Litcoins: " + numberOfCoins;
+        stringToSend = "Litcoins: " + numberOfCoins; //gets the number of coins the user has
         //event.getChannel().sendMessage(stringToSend).queue();
         event.getMessage().reply(stringToSend).queue();
     }
@@ -87,6 +101,7 @@ public class Litcoin {
     }
 
     public void addCoins(int coinsToAdd) throws SQLException{
+        //adds coins to the current user
         PreparedStatement prepStmt = Bot.conn.prepareStatement("UPDATE Litcoin SET NumberOfCoins = ? WHERE UserID = ?");
         prepStmt.setInt(1, numberOfCoins+coinsToAdd);
         prepStmt.setString(2, userID);
@@ -96,6 +111,7 @@ public class Litcoin {
     }
 
     public void negateCoins(int coinsToNegate) throws SQLException{
+        //negates coins from the current users balance
         PreparedStatement prepStmt = Bot.conn.prepareStatement("UPDATE Litcoin SET NumberOfCoins = ? WHERE UserID = ?");
         prepStmt.setInt(1, numberOfCoins-coinsToNegate);
         prepStmt.setString(2, userID);
@@ -104,10 +120,19 @@ public class Litcoin {
         }
     }
     public static String helpToString(){
-
         String retString = "**!currency-help**: Get help in learning our currency system!\n" +
                 "**!litcoin**: Check how many coins you have in this server.\n";
 
         return retString;
+    }
+
+    public void updateCoinCount() throws SQLException {
+        PreparedStatement prepStmt = Bot.conn.prepareStatement("select UserID, NumberOfCoins from Litcoin where UserID = ? AND ServerID = ?");
+        prepStmt.setString(1, userID); //fill in the blanks in the preparedstatement
+        prepStmt.setString(2, serverID);
+        ResultSet result = prepStmt.executeQuery();
+        if(result.next()) {
+            this.numberOfCoins = result.getInt(2);
+        }
     }
 }

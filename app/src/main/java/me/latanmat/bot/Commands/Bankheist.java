@@ -6,7 +6,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 
+/*
+ * This is the main Bankheist class that will do all the
+ *  bankheist work such as adding coins, and keeping track of who is in
+ *  the heist.  When a user is added, Bankheist will be called to add a new user
+ *  to the bankheist.  To keep track of who is in the heist, we have to keep
+ *  track of the users entered and we also have to keep track of
+ *  how much each user bidded.
+ */
 public class Bankheist  {
+    //usersEntered and coinsBidded are connected, and the corresponding values
+    //will be held on the same index
+    //this means that usersEntered.length == coinsBidded.length
     private static ArrayList<Litcoin> usersEntered;
     private static ArrayList<Integer> coinsBidded;
 
@@ -16,6 +27,12 @@ public class Bankheist  {
     }
 
     public void startBankheist(GuildMessageReceivedEvent event) throws SQLException{
+        /*
+         * Starts the bankheist. The only thread that will be in this function
+         * will be the thread made by the main thread.  This is so that the bot can still
+         * listen for commands while the bankheist is being timed to start.  Check BankheistThread
+         * for more information.
+         */
         String name = event.getAuthor().getName();
         String stringToSend = "A new bankheist has been started by " + name + "! If you want" +
                 " to participate in this bankheist, type in the command !bankheist [# of coins].  You CAN'T" +
@@ -24,7 +41,7 @@ public class Bankheist  {
         event.getChannel().sendMessage(stringToSend).queue();
 
         try {
-            Thread.sleep(60 * 1000);
+            Thread.sleep(60 * 1000); //timer to give other users time to join
             stringToSend = "The bankheist has commenced! Let's see what kind of money we can get";
             event.getChannel().sendMessage(stringToSend).queue();
             Thread.sleep(5 * 1000);
@@ -35,9 +52,17 @@ public class Bankheist  {
     }
 
     public void addUserToBankheist(Litcoin currentUser, int coins, GuildMessageReceivedEvent event) throws SQLException{
-        usersEntered.add(currentUser);
-        coinsBidded.add(coins);
-        event.getMessage().reply("You have been added into the bankheist! Good luck!").queue();
+        /*
+         *  Add's new user to the bankheist if they haven't already been added to the heist
+         */
+        if(!isUserInHeist(currentUser)) {
+            usersEntered.add(currentUser);
+            coinsBidded.add(coins);
+            event.getMessage().reply("You have been added into the bankheist! Good luck!").queue();
+        }
+        else{
+            event.getMessage().reply("Unable to add you to the bankbeist either because it is in session or you have already been added.").queue();
+        }
     }
 
     public void executeBankheist(GuildMessageReceivedEvent event) throws SQLException{
@@ -115,12 +140,13 @@ public class Bankheist  {
         }
 
         if(usersEntered.isEmpty()){
-            event.getChannel().sendMessage("The wind gusts as the meeting room is empty.\nNobody made it out.");
+            event.getChannel().sendMessage("The wind gusts as the meeting room is empty.\nNobody made it out.").queue();
         }
         else {
-            for (int i = 0; i < numberOfParticipants; i++) {
+            for (int i = 0; i < usersEntered.size(); i++) {
                 int coinsToAdd = coinsBidded.get(i);
                 coinsToAdd *= multiplier;
+                usersEntered.get(i).updateCoinCount();
                 usersEntered.get(i).addCoins(coinsToAdd);
                 stringToSend = stringToSend + usersEntered.get(i).getName() + ": " + coinsToAdd + "\n";
             }
@@ -145,9 +171,15 @@ public class Bankheist  {
 
     public static String helpToString(){
         String retString = "**!bankheist [# of coins]**: Start a new bankheist with other people in the server!\n";
-
         return retString;
     }
 
-
+    public boolean isUserInHeist(Litcoin user){
+        for(int i = 0; i < usersEntered.size(); i++) {
+            if (user.getUserID().equals(usersEntered.get(i).getUserID())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
