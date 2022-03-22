@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Bankheist {
+public class Bankheist  {
     private static ArrayList<Litcoin> usersEntered;
     private static ArrayList<Integer> coinsBidded;
 

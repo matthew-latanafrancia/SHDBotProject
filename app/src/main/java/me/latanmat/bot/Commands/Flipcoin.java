@@ -5,7 +5,7 @@ import java.util.Random;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class Flipcoin {
-    public static boolean flipcoinCommand(GuildMessageReceivedEvent event){
+    public static boolean flipcoinCommand(GuildMessageReceivedEvent event) {
         /*
         The flipcoinCommand function returns true or false
         Output:

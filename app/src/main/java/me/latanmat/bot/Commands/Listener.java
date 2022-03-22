@@ -1,10 +1,13 @@
 package me.latanmat.bot.Commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.awt.*;
+import java.util.List;
 import java.sql.SQLException;
 
 public class Listener extends ListenerAdapter {
@@ -86,6 +89,19 @@ public class Listener extends ListenerAdapter {
                         } catch (NumberFormatException ex) {
                             System.out.println("NumberFormatException: " + ex.getMessage());
                         }
+                    }
+                }
+
+                else if(args[0].equalsIgnoreCase(prefix + "challenge")){
+                    if(args.length == 2){
+                        List<User> mentioned = event.getMessage().getMentionedUsers();
+                        Litcoin idOfOpponent = new Litcoin(mentioned.get(0).getId(), event.getGuild().getId(), mentioned.get(0).getName());
+                        ChallengeThread cThread = new ChallengeThread(event, idOfOpponent, currentUser );
+                        Thread cMThread = new Thread(cThread);
+                        cMThread.start();
+                    }
+                    else {
+                        event.getMessage().reply("Usage: !challenge [name of user to challenge]").queue();
                     }
                 }
 
