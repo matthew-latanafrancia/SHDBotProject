@@ -14,7 +14,7 @@ import java.util.Random;
  *  track of the users entered and we also have to keep track of
  *  how much each user bidded.
  */
-public class Bankheist  {
+public class Bankheist {
     //usersEntered and coinsBidded are connected, and the corresponding values
     //will be held on the same index
     //this means that usersEntered.length == coinsBidded.length
