@@ -1,7 +1,6 @@
 package me.latanmat.bot.Commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -99,6 +98,7 @@ public class Listener extends ListenerAdapter {
                     }
                 }
 
+                /*
                 else if(args[0].equalsIgnoreCase(prefix + "challenge")){
                     if(args.length == 2){
                         List<User> mentioned = event.getMessage().getMentionedUsers();
@@ -111,6 +111,7 @@ public class Listener extends ListenerAdapter {
                         event.getMessage().reply("Usage: !challenge [name of user to challenge]").queue();
                     }
                 }
+                */
 
                 else if(args[0].equalsIgnoreCase(prefix + "quote")){
                     if(args.length > 1){
