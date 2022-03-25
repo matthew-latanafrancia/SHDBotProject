@@ -12,6 +12,12 @@ public class TriviaListener extends ListenerAdapter{
     private TriviaQuestion currQuestion = null;
     private String currUserID;
 
+    /*
+     * The TriviaListener is a separate listener function
+     * for the trivia game since it would be hard to do it in its own
+     * function.
+     */
+
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event){
         String[] args = event.getMessage().getContentRaw().split("\\s+");
