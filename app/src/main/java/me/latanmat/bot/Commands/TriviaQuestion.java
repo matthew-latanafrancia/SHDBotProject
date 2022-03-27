@@ -9,6 +9,11 @@ public class TriviaQuestion {
     private String answer;
     private String[] incorrectAnswers;
 
+    /*
+    The TriviaQuestion will carry the questions and answers to the said
+    question.  These connect to the TriviaListener and the Trivia class which
+    will turn these questions into part of the trivia game.
+     */
     public TriviaQuestion(String question, String answer){
         this.question = question;
         this.answer = answer;

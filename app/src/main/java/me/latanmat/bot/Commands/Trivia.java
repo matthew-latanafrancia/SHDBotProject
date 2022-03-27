@@ -9,6 +9,12 @@ public class Trivia {
     private TextChannel channelPlayingIn;
     private ArrayList<TriviaQuestion> questions = new ArrayList<>();
 
+    /*
+    Trivia initializes the trivia game with a certain amount of questions.
+    The below code is just an outline so if you want, you can change the questions and answers
+    to whatever you want.  In the future, I want to configure this to be compatible
+    with a file for easier insertion and deletion of questions.
+     */
     public Trivia(TextChannel channelPlayingIn, Litcoin currentUser){
         this.channelPlayingIn = channelPlayingIn;
         this.userThatsPlaying = currentUser;
@@ -49,7 +55,6 @@ public class Trivia {
 
     public TriviaQuestion askQuestion(int i){
             //ask question q1
-            //ask question q2
             TriviaQuestion currQuestion = questions.get(i);
             currQuestion.setUpQuestion(channelPlayingIn);
             return currQuestion;

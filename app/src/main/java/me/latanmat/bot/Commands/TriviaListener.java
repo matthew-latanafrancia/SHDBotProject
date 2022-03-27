@@ -24,6 +24,8 @@ public class TriviaListener extends ListenerAdapter{
         try {
             Litcoin currentUser = new Litcoin(event.getAuthor().getId(), event.getGuild().getId(), event.getAuthor().getName());
             if (!isTriviaGoing) {
+                //This if statement will run if there is no trivia game currently running in any channel.
+                //Because of this, only one trivia game can run per bot.
                 if (args[0].startsWith(prefix)) {
                     if (args[0].equalsIgnoreCase(prefix + "trivia")) {
                         event.getChannel().sendMessage("You just started a trivia game! Good luck!").queue();
