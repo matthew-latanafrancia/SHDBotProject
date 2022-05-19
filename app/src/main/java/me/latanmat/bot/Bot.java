@@ -1,11 +1,12 @@
 package me.latanmat.bot;
 
+import me.latanmat.bot.Commands.ChallengeListener;
 import me.latanmat.bot.Commands.Listener;
+import me.latanmat.bot.Commands.TriviaListener;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 
-import javax.security.auth.login.LoginException;
 import java.io.FileInputStream;
 import java.sql.*;
 import java.util.Properties;
@@ -16,10 +17,12 @@ public class Bot {
 
     public static void main(String[] args) throws Exception {
         //will make a config file in the future
-        JDABuilder builder = JDABuilder.createDefault("INSERT TOKEN HERE");
+        JDABuilder builder = JDABuilder.createDefault("OTU0MTQ4NTYwNDgyNDkyNTA2.YjO6GA.iRlAi-EwshFS-1FRTjIY2GD_drU");
         builder.setActivity(Activity.playing("Making a Discord Bot"));
         builder.setStatus(OnlineStatus.ONLINE);
         builder.addEventListeners(new Listener());
+        builder.addEventListeners(new TriviaListener());
+        builder.addEventListeners(new ChallengeListener());
 
         builder.build();
 
