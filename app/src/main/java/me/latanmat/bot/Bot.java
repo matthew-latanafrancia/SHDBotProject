@@ -17,7 +17,7 @@ public class Bot {
 
     public static void main(String[] args) throws Exception {
         //will make a config file in the future
-        JDABuilder builder = JDABuilder.createDefault("OTU0MTQ4NTYwNDgyNDkyNTA2.YjO6GA.iRlAi-EwshFS-1FRTjIY2GD_drU");
+        JDABuilder builder = JDABuilder.createDefault("stop doing that");
         builder.setActivity(Activity.playing("Making a Discord Bot"));
         builder.setStatus(OnlineStatus.ONLINE);
         builder.addEventListeners(new Listener());
